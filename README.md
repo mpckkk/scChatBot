@@ -12,4 +12,4 @@ The **Single Cell ChatBot** is an interactive application built with [Gradio](ht
 
 ## Installation
 
-Details will be updated here later.
+All required packages is in `install.txt`.
