@@ -14,16 +14,16 @@ The **Single Cell ChatBot** is an interactive application built with [Gradio](ht
 
 All required packages is in `install.txt`.
 
-conda create -n chatbot_env python=3.10
+`conda create -n chatbot_env python=3.10`
 
 
-conda activate chatbot_env
+`conda activate chatbot_env`
 
 
-pip install gradio
+`pip install gradio`
 
 
-pip install zhipuai
+`pip install zhipuai`
 
 
 Now all required packages is installed, you need to get your own ZHIPU API and run `python chatbot.py' to get start!
