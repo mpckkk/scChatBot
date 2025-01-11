@@ -25,5 +25,5 @@ All required packages is in `install.txt`.
 `pip install zhipuai`
 
 
-Now all required packages is installed, you need to get your own ZHIPU API and run `python chatbot.py` to get start!
+Now all required packages is installed, you need to get your own ZHIPU API from https://open.bigmodel.cn and run `python chatbot.py` to get start tp explore!
 
