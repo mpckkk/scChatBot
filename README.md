@@ -9,6 +9,9 @@ The **Single Cell ChatBot** is an interactive application built with [Gradio](ht
 - **Like/Dislike Feedback**: Users can provide feedback on responses.
 
 
+Working on add text to image features on webVersion...
+
+
 ## Installation
 
 All required packages is in `install.txt`.
