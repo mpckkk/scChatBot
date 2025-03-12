@@ -1,5 +1,5 @@
 ## scChatBot
-
+![Image description](image1.png)
 The **Single Cell ChatBot** is an interactive application built with [Gradio](https://gradio.app/) and [ZhipuAI](https://www.bigmodel.cn), designed to provide conversational capabilities. This chatbot supports multimodal inputs, including text and files, and offers a responsive, avatar-based interface.
 
 ## Features
