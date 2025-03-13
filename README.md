@@ -1,15 +1,36 @@
-## scChatBot
-![Image description](image1.png)
-The **Single Cell ChatBot** is an interactive application built with [Gradio](https://gradio.app/) and [ZhipuAI](https://www.bigmodel.cn), designed to provide conversational capabilities. This chatbot supports multimodal inputs, including text and files, and offers a responsive, avatar-based interface.
+# 🧬 scChatBot
 
-## Features
+![scChatBot Interface](image1.png)
 
-- **Multimodal Input**: Users can interact with the chatbot via text or upload files (e.g., documents, images, or audio).
-- **Real-Time Streaming**: Responses are streamed character by character for a natural conversational experience.
-- **Like/Dislike Feedback**: Users can provide feedback on responses.
+**scChatBot** is an interactive, multimodal chatbot built with [Gradio](https://gradio.app/) and [ZhipuAI](https://www.bigmodel.cn). It features real-time, avatar-based conversations and supports various input types, making it ideal for single-cell researchers and curious minds alike.
 
+---
 
-Working on add text to image features on webVersion...
+## ✨ Features
+
+- **🧠 Multimodal Interaction**  
+  Chat with the bot using **text** or by uploading **files** (documents, images, audio, etc.).
+
+- **⚡ Real-Time Streaming**  
+  Enjoy character-by-character streaming for a natural, human-like conversation.
+
+- **👍 User Feedback**  
+  Like or dislike chatbot responses to help improve interactions.
+
+- **🖼️ Coming Soon**  
+  *Text-to-image generation* for the web version is under development!
+
+---
+
+## 🚀 Installation & Setup
+
+Follow these steps to set up your environment and start chatting:
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/scChatBot.git
+cd scChatBot
 
 
 ## Installation
