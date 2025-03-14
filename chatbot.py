@@ -1,13 +1,40 @@
 import gradio as gr
 import time
 from zhipuai import ZhipuAI
-
-
+from docx import Document
+from PyPDF2 import PdfReader
 class ChatBot:
     def __init__(self):
-        self.client = ZhipuAI(api_key="") #change to your own zhipu API
+        # Replace with your ZhipuAI API key
+        self.client = ZhipuAI(api_key="YOUR API KEY")
+
+    def read_file_content(self, file_path):
+        """Reads the content of supported file types (TXT, DOC/DOCX, PDF)."""
+        try:
+            if file_path.endswith('.txt'):
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    return f.read()
+
+            elif file_path.endswith(('.doc', '.docx')):
+                doc = Document(file_path)
+                return '\n'.join([para.text for para in doc.paragraphs])
+
+            elif file_path.endswith('.pdf'):
+                with open(file_path, 'rb') as f:
+                    pdf = PdfReader(f)
+                    text = []
+                    for page in pdf.pages:
+                        text.append(page.extract_text())
+                return '\n'.join(text)
+
+            else:
+                return f"Unsupported file type: {os.path.splitext(file_path)[1]}"
+
+        except Exception as e:
+            return f"Error reading file: {str(e)}"
 
     def query_zhipuai(self, query):
+        """Sends the query to the ZhipuAI API and returns the response."""
         try:
             response = self.client.chat.completions.create(
                 model="glm-4-flash",
@@ -21,40 +48,45 @@ class ChatBot:
             return f"Error: {str(e)}"
 
     def print_like_dislike(self, x: gr.LikeData):
+        """Handles like/dislike feedback from the user."""
         print(f"Message {x.index} was {'liked' if x.liked else 'disliked'}: {x.value}")
 
     def add_message(self, history, message):
+        """Adds a user message (text or file) to the chat history."""
+        final_query = ""
+
         if isinstance(message, dict):
-            for x in message.get("files", []):
-                history = history + [({"path": x}, None)]
-            if message.get("text"):
-                history = history + [(message["text"], None)]
+            # Combine text input and file contents
+            text_content = message.get("text", "")
+            file_contents = []
+
+            for file_path in message.get("files", []):
+                content = self.read_file_content(file_path)
+                file_contents.append(f"FILE CONTENT:\n{content}")
+
+            final_query = '\n\n'.join([text_content] + file_contents)
+
         else:
-            history = history + [(message, None)]
+            final_query = message
+
+        history = history + [(final_query, None)]
         return history, gr.MultimodalTextbox(value=None, interactive=False)
 
     def generate_response(self, history):
+        """Generates a response from the chatbot and streams it to the UI."""
         if not history:
             return history
 
         user_message = history[-1][0]
-        if isinstance(user_message, dict):
-            content = "I see you've shared a file!"
-        else:
-            if "search:" in user_message.lower():
-                query = user_message.lower().replace("search:", "").strip()
-                content = self.query_zhipuai(query)
-            else:
-                content = self.query_zhipuai(user_message)
-
-        if not content:
-            content = "I apologize, but I couldn't process that properly."
+        content = self.query_zhipuai(user_message)
 
         history[-1] = (history[-1][0], "")
         for char in content:
             history[-1] = (history[-1][0], history[-1][1] + char)
             time.sleep(0.02)
             yield history
+
+
 def create_demo():
     chatbot = ChatBot()
     with gr.Blocks(css="""
