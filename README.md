@@ -9,7 +9,7 @@
 ## ✨ Features
 
 - **🧠 Multimodal Interaction**  
-  Chat with the bot using **text** or by uploading **files** (documents, images, audio, etc.).
+  Chat with the bot using **text** or by uploading **files** (TXT, DOC/DOCX, PDF only for now).
 
 - **⚡ Real-Time Streaming**  
   Enjoy character-by-character streaming for a natural, human-like conversation.
