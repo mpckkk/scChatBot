@@ -29,24 +29,13 @@ Follow these steps to set up your environment and start chatting:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/scChatBot.git
+git clone https://github.com/mpckkk/scChatBot
 cd scChatBot
 
 
 ## Installation
 
 All required packages is in `install.txt`.
-
-`conda create -n chatbot_env python=3.10`
-
-
-`conda activate chatbot_env`
-
-
-`pip install gradio`
-
-
-`pip install zhipuai`
 
 
 Now all required packages is installed, you need to get your own ZHIPU API from https://open.bigmodel.cn and run `python chatbot.py` to get start to explore!
