@@ -1,3 +1,5 @@
 python=3.10
 zhipuai
 gradio
+python-docx
+PyPDF2
