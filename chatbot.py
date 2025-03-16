@@ -1,15 +1,17 @@
 import gradio as gr
 import time
+import os
+import speech_recognition as sr
 from zhipuai import ZhipuAI
 from docx import Document
 from PyPDF2 import PdfReader
 class ChatBot:
     def __init__(self):
         # Replace with your ZhipuAI API key
-        self.client = ZhipuAI(api_key="YOUR API KEY")
+        self.client = ZhipuAI(api_key="API HERE")
 
     def read_file_content(self, file_path):
-        """Reads the content of supported file types (TXT, DOC/DOCX, PDF)."""
+        """Reads the content of supported file types (TXT, DOC/DOCX, PDF, WAV)."""
         try:
             if file_path.endswith('.txt'):
                 with open(file_path, 'r', encoding='utf-8') as f:
@@ -26,6 +28,13 @@ class ChatBot:
                     for page in pdf.pages:
                         text.append(page.extract_text())
                 return '\n'.join(text)
+
+            elif file_path.endswith('.wav'):
+                recognizer = sr.Recognizer()
+                with sr.AudioFile(file_path) as source:
+                    audio = recognizer.record(source)
+                    text = recognizer.recognize_google(audio)  # Use Google Speech-to-Text
+                return f"AUDIO CONTENT:\n{text}"
 
             else:
                 return f"Unsupported file type: {os.path.splitext(file_path)[1]}"
@@ -50,7 +59,6 @@ class ChatBot:
     def print_like_dislike(self, x: gr.LikeData):
         """Handles like/dislike feedback from the user."""
         print(f"Message {x.index} was {'liked' if x.liked else 'disliked'}: {x.value}")
-
     def add_message(self, history, message):
         """Adds a user message (text or file) to the chat history."""
         final_query = ""
@@ -62,7 +70,10 @@ class ChatBot:
 
             for file_path in message.get("files", []):
                 content = self.read_file_content(file_path)
-                file_contents.append(f"FILE CONTENT:\n{content}")
+                # Remove prefixes like "FILE CONTENT:" and "AUDIO CONTENT:"
+                if content.startswith("FILE CONTENT:") or content.startswith("AUDIO CONTENT:"):
+                    content = content.split(":", 1)[-1].strip()  # Remove the prefix
+                file_contents.append(content)
 
             final_query = '\n\n'.join([text_content] + file_contents)
 
@@ -71,7 +82,6 @@ class ChatBot:
 
         history = history + [(final_query, None)]
         return history, gr.MultimodalTextbox(value=None, interactive=False)
-
     def generate_response(self, history):
         """Generates a response from the chatbot and streams it to the UI."""
         if not history:
