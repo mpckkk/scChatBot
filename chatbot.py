@@ -124,7 +124,7 @@ def create_demo():
         }
     """) as demo:
         gr.HTML(
-            "<div class='title'>" + "".join(f"<span>{char}</span>" for char in "🌟 ZHIPU AI Chatbot 🌟") + "</div>")
+            "<div class='title'>" + "".join(f"<span>{char}</span>" for char in "🌟 scChatbot 🌟") + "</div>")
 
         chat_interface = gr.Chatbot(
             height=600,
